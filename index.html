@@ -182,13 +182,13 @@
   </head>
   <body>
     <div id="login-screen">
-      <h1>🏡 ĐẠI CHIẾN ĐẤT ĐAI 🏡</h1>
+      <h1>🏡 ĐẠI CHIẾN ĐẤT ĐAI TP. BẢO LỘC - SCP001 🏡</h1>
       <p style="color: #bbb; margin-bottom: 30px">
-        Nhập danh tính đại gia để vào chốt đơn
+        Nhập danh tính để vào chốt đơn
       </p>
-      <input type="text" id="username" placeholder="Ví dụ: Shark Hưng" />
+      <input type="text" id="username" placeholder="Ví dụ: Bé Đạt" />
       <br />
-      <button id="start-btn">VÀO CHỢ ĐẤT</button>
+      <button id="start-btn">VÀO MUA ĐẤT</button>
     </div>
 
     <div id="game-board">
@@ -207,7 +207,7 @@
 
       <div class="status" id="status-msg"></div>
       <p style="color: #555; font-size: 0.8em; margin-top: 30px">
-        Game Real-time by Admin
+        Game Real-time by Admin, httiendat
       </p>
     </div>
 
@@ -318,7 +318,7 @@
         const currentHour = now.getHours();
 
         // !!! CHÚ Ý: Sửa số 18 bên dưới thành số 0 nếu muốn test ngay bây giờ !!!
-        if (currentHour < 18) {
+        if (currentHour < 0) {
           msgBox.textContent = "⛔ Chưa tới giờ mở bán! 18h quay lại nhé.";
           return;
         }
@@ -358,3 +358,4 @@
     </script>
   </body>
 </html>
+
