@@ -1,362 +1,244 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ĐẠI CHIẾN "PHÂN LÔ BÁN NỀN" TP. BẢO LỘC - SCP001 🏡</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ĐẠI CHIẾN PHÂN LÔ BÁN NỀN 🏡</title>
     <style>
-      /* --- PHẦN CSS TRANG TRÍ --- */
-      body {
-        background-color: #121212;
-        color: #fff;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        text-align: center;
-        margin: 0;
-        padding: 20px;
-      }
-      h1 {
-        color: #ffeb3b;
-        text-shadow: 2px 2px 0 #000;
-        text-transform: uppercase;
-        margin-bottom: 5px;
-        letter-spacing: 2px;
-      }
-
-      /* Màn hình đăng nhập */
-      #login-screen {
-        margin-top: 80px;
-        transition: all 0.5s;
-      }
-      input {
-        padding: 15px;
-        font-size: 20px;
-        border-radius: 50px;
-        border: 3px solid #ffeb3b;
-        background: #333;
-        color: white;
-        text-align: center;
-        width: 80%;
-        max-width: 300px;
-        outline: none;
-      }
-      button#start-btn {
-        padding: 15px 50px;
-        font-size: 20px;
-        background: #ff0055;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        font-weight: bold;
-        margin-top: 20px;
-        transition: 0.2s;
-        box-shadow: 0 5px 20px rgba(255, 0, 85, 0.5);
-      }
-      button#start-btn:hover {
-        transform: scale(1.1);
-        background: #ff3377;
-      }
-
-      /* KHU VỰC BẢN ĐỒ */
-      #game-board {
-        display: none;
-        max-width: 100%;
-        margin: 0 auto;
-        animation: fadeIn 1s;
-      }
-
-      .map-container {
-        /* Kích thước bản đồ */
-        width: 600px;
-        height: 600px;
-        margin: 20px auto;
-        position: relative;
-
-        /* ẢNH BẢN ĐỒ CỦA BẠN */
-        background-image: url("36 KHU DAT.jpeg");
-        background-size: cover;
-        background-position: center;
-
-        border: 5px solid #fff;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-        border-radius: 15px;
-        overflow: hidden;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-        width: 100%;
-        height: 100%;
-      }
-
-      .slot {
-        /* Hiệu ứng kính mờ */
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        user-select: none;
-        color: #fff;
-        text-shadow: 2px 2px 4px #000;
-        position: relative;
-      }
-
-      .slot span.num {
-        font-size: 32px;
-        font-weight: 900;
-        opacity: 0.9;
-        z-index: 2;
-      }
-      .slot span.owner {
-        font-size: 11px;
-        font-weight: bold;
-        background: #000;
-        color: #fff;
-        padding: 2px 6px;
-        border-radius: 4px;
-        margin-top: 5px;
-        z-index: 2;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-      }
-
-      /* Hiệu ứng khi di chuột */
-      .slot:hover:not(.taken) {
-        background: rgba(0, 255, 136, 0.5);
-        border: 2px solid #fff;
-        z-index: 10;
-        transform: scale(1.05);
-      }
-
-      /* Ô ĐÃ CÓ CHỦ (Màu Đỏ) */
-      .slot.taken {
-        background: rgba(220, 20, 60, 0.85) !important;
-        cursor: not-allowed;
-      }
-      .slot.taken span.num {
-        display: none;
-      } /* Ẩn số đi */
-
-      /* Ô CỦA MÌNH (Màu Xanh Dương) */
-      .slot.mine {
-        background: rgba(30, 144, 255, 0.85) !important;
-        border: 3px solid #fff;
-      }
-
-      .status {
-        margin-top: 15px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #ffeb3b;
-        min-height: 25px;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+        /* --- CSS GIỮ NGUYÊN NHƯ CŨ --- */
+        body { 
+            background-color: #121212; 
+            color: #fff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            margin: 0; padding: 20px;
         }
-        to {
-          opacity: 1;
+        h1 { color: #ffeb3b; text-shadow: 2px 2px 0 #000; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 2px;}
+        
+        #login-screen { margin-top: 80px; transition: all 0.5s; }
+        
+        /* Input nhập tên */
+        input { 
+            padding: 15px; font-size: 20px; border-radius: 50px; 
+            border: 3px solid #ffeb3b; background: #333; color: white;
+            text-align: center; width: 80%; max-width: 300px; outline: none;
+            transition: 0.3s;
         }
-      }
+        /* Class để ẩn input khi chưa đến giờ */
+        input.locked { opacity: 0.5; cursor: not-allowed; border-color: #555; background: #222; }
 
-      /* Mobile Responsive */
-      @media (max-width: 650px) {
+        button#start-btn { 
+            padding: 15px 50px; font-size: 20px; background: #ff0055; color: white;
+            border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; 
+            transition: 0.2s; box-shadow: 0 5px 20px rgba(255, 0, 85, 0.5);
+        }
+        button#start-btn:hover { transform: scale(1.1); background: #ff3377; }
+        
+        /* Style cho nút khi bị khóa */
+        button#start-btn:disabled {
+            background: #555; color: #aaa; cursor: not-allowed;
+            transform: none; box-shadow: none;
+        }
+
+        #game-board { display: none; max-width: 100%; margin: 0 auto; animation: fadeIn 1s; }
+        
         .map-container {
-          width: 350px;
-          height: 350px;
+            width: 600px; height: 600px; margin: 20px auto; position: relative;
+            background-image: url('bando.jpg'); background-size: cover; background-position: center;
+            border: 5px solid #fff; box-shadow: 0 0 30px rgba(0,0,0,0.8); border-radius: 15px; overflow: hidden;
         }
-        .slot span.num {
-          font-size: 20px;
+
+        .grid { display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); width: 100%; height: 100%; }
+        
+        .slot {
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255, 0.3);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; user-select: none; color: #fff; text-shadow: 2px 2px 4px #000;
         }
-        input {
-          width: 90%;
-        }
-      }
+        .slot span.num { font-size: 32px; font-weight: 900; opacity: 0.9; }
+        .slot span.owner { font-size: 11px; font-weight: bold; background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; margin-top: 5px; }
+
+        .slot:hover:not(.taken) { background: rgba(0, 255, 136, 0.5); border: 2px solid #fff; z-index: 10; transform: scale(1.05); }
+        .slot.taken { background: rgba(220, 20, 60, 0.85) !important; cursor: not-allowed; }
+        .slot.taken span.num { display: none; }
+        .slot.mine { background: rgba(30, 144, 255, 0.85) !important; border: 3px solid #fff; }
+        
+        .status { margin-top: 15px; font-size: 18px; font-weight: bold; color: #ffeb3b; min-height: 25px;}
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @media (max-width: 650px) { .map-container { width: 350px; height: 350px; } .slot span.num { font-size: 20px; } input { width: 90%; } }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <div id="login-screen">
-      <h1>🏡 ĐẠI CHIẾN ĐẤT ĐAI TP. BẢO LỘC - SCP001 🏡</h1>
-      <p style="color: #bbb; margin-bottom: 30px">
-        Nhập danh tính để vào chốt đơn
-      </p>
-      <input type="text" id="username" placeholder="Ví dụ: Bé Đạt" />
-      <br />
-      <button id="start-btn">VÀO MUA ĐẤT</button>
+        <h1>🏡 ĐẠI CHIẾN GIÀNH Ô ĐẤT TP. BẢO LỘC - SCP001 🏡</h1>
+        <p id="sub-title" style="color:#bbb; margin-bottom: 30px;">Nhập danh tính đại gia để vào chốt đơn</p>
+        
+        <input type="text" id="username" placeholder="Ví dụ: Shark Hưng" />
+        <br>
+        <button id="start-btn">VÀO MUA ĐẤT</button>
     </div>
 
     <div id="game-board">
-      <p>
-        Đại gia:
-        <strong id="display-name" style="color: #00ff88; font-size: 1.2em"
-          >...</strong
-        >
-        | Đã chốt:
-        <span id="count" style="color: #ffeb3b; font-size: 1.5em">0</span>/2 lô
-      </p>
-
-      <div class="map-container">
-        <div class="grid" id="grid"></div>
-      </div>
-
-      <div class="status" id="status-msg"></div>
-      <p style="color: #555; font-size: 0.8em; margin-top: 30px">
-        Game Real-time by Admin, httiendat
-      </p>
+        <p>Đại gia: <strong id="display-name" style="color:#00ff88; font-size: 1.2em;">...</strong> | Đã chốt: <span id="count" style="color: #ffeb3b; font-size: 1.5em;">0</span>/2 lô</p>
+        <div class="map-container"><div class="grid" id="grid"></div></div>
+        <div class="status" id="status-msg"></div>
+        <p style="color: #555; font-size: 0.8em; margin-top: 30px;">Game Real-time by Admin</p>
     </div>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        onValue,
-        runTransaction,
-      } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-      // ==========================================
-      // 1. DÁN CONFIG FIREBASE VÀO ĐÂY
-      // ==========================================
-      const firebaseConfig = {
-        apiKey: "AIzaSyDlktYhwJpru8aVgcMR5sOEaCVZkSbQaxs",
-        authDomain: "gamegiatslot.firebaseapp.com",
-        databaseURL: "https://gamegiatslot-default-rtdb.firebaseio.com",
-        projectId: "gamegiatslot",
-        storageBucket: "gamegiatslot.firebasestorage.app",
-        messagingSenderId: "779456135931",
-        appId: "1:779456135931:web:64b7522de812e69099a65e",
-      };
+        // ==========================================
+        // DÁN CONFIG CỦA BÀ VÀO ĐÂY
+        // ==========================================
+        const firebaseConfig = {
+          apiKey: "AIzaSyDlktYhwJpru8aVgcMR5sOEaCVZkSbQaxs",
+          authDomain: "gamegiatslot.firebaseapp.com",
+          databaseURL: "https://gamegiatslot-default-rtdb.firebaseio.com",
+          projectId: "gamegiatslot",
+          storageBucket: "gamegiatslot.firebasestorage.app",
+          messagingSenderId: "779456135931",
+          appId: "1:779456135931:web:64b7522de812e69099a65e"
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const db = getDatabase(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-      let myName = "";
-      let mySlots = 0;
+        // --- CẤU HÌNH GIỜ MỞ CỬA ---
+        const OPEN_HOUR = 18; // 18 giờ tối mới mở
+        // ---------------------------
 
-      // Xử lý nút Đăng nhập
-      document.getElementById("start-btn").addEventListener("click", () => {
-        const nameInput = document.getElementById("username").value.trim();
-        if (!nameInput) {
-          alert("Vui lòng nhập tên để biết ai là chủ đất!");
-          return;
-        }
-        myName = nameInput;
-        document.getElementById("display-name").textContent = myName;
+        let myName = "";
+        let mySlots = 0;
 
-        // Chuyển màn hình
-        document.getElementById("login-screen").style.display = "none";
-        document.getElementById("game-board").style.display = "block";
+        // --- HÀM KIỂM TRA GIỜ NGAY KHI LOAD TRANG ---
+        function checkOpeningTime() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const btn = document.getElementById('start-btn');
+            const input = document.getElementById('username');
+            const subTitle = document.getElementById('sub-title');
 
-        // Bắt đầu tải dữ liệu
-        loadSlots();
-      });
+            if (currentHour < OPEN_HOUR) {
+                // CHƯA ĐẾN GIỜ -> KHÓA HẾT
+                btn.disabled = true;
+                btn.textContent = `🔒 MỞ CỬA LÚC ${OPEN_HOUR}H00`;
+                
+                input.disabled = true;
+                input.classList.add('locked');
+                input.placeholder = "Chưa đến giờ đâu cưng!";
+                input.value = ""; // Xóa nếu cố tình nhập
 
-      // Hàm vẽ ô và lắng nghe dữ liệu
-      function loadSlots() {
-        const grid = document.getElementById("grid");
-        grid.innerHTML = "";
-
-        // Tạo 36 ô
-        for (let i = 1; i <= 36; i++) {
-          let div = document.createElement("div");
-          div.className = "slot";
-          div.id = `slot-${i}`;
-          div.innerHTML = `<span class="num">${i}</span><span class="owner"></span>`;
-
-          // Gắn sự kiện click
-          div.addEventListener("click", () => pickSlot(i));
-          grid.appendChild(div);
-        }
-
-        // Lắng nghe Firebase (Realtime)
-        const slotsRef = ref(db, "slots");
-        onValue(slotsRef, (snapshot) => {
-          const data = snapshot.val() || {};
-          let currentMySlots = 0;
-
-          for (let i = 1; i <= 36; i++) {
-            const slotDiv = document.getElementById(`slot-${i}`);
-            const ownerName = document.querySelector(`#slot-${i} .owner`);
-
-            if (data[i]) {
-              // Nếu ô đã có người chọn
-              slotDiv.classList.add("taken");
-              ownerName.textContent = data[i]; // Hiện tên người đó
-
-              // Nếu là của mình
-              if (data[i] === myName) {
-                slotDiv.classList.add("mine");
-                currentMySlots++;
-              } else {
-                slotDiv.classList.remove("mine");
-              }
+                subTitle.textContent = `⛔ Sàn giao dịch đóng cửa. Vui lòng quay lại lúc ${OPEN_HOUR}h00!`;
+                subTitle.style.color = "#ff0055";
+                
+                return false; // Trả về false
             } else {
-              // Ô trống
-              slotDiv.classList.remove("taken", "mine");
-              ownerName.textContent = "";
+                // ĐẾN GIỜ -> MỞ KHÓA
+                return true; // Trả về true
             }
-          }
+        }
 
-          // Cập nhật số lượng ô mình đã chọn
-          mySlots = currentMySlots;
-          document.getElementById("count").textContent = mySlots;
+        // Chạy kiểm tra ngay lập tức khi vào web
+        checkOpeningTime();
+
+        // Xử lý nút Đăng nhập
+        document.getElementById('start-btn').addEventListener('click', () => {
+            // Kiểm tra lại lần nữa cho chắc (tránh hack HTML)
+            if (!checkOpeningTime()) return;
+
+            const nameInput = document.getElementById('username').value.trim();
+            if (!nameInput) {
+                alert("Vui lòng nhập tên để biết ai là chủ đất!");
+                return;
+            }
+            myName = nameInput;
+            document.getElementById('display-name').textContent = myName;
+            
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('game-board').style.display = 'block';
+            
+            loadSlots();
         });
-      }
 
-      // Hàm xử lý khi bấm vào ô (GIỰT SLOT)
-      function pickSlot(slotId) {
-        const msgBox = document.getElementById("status-msg");
+        function loadSlots() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ""; 
 
-        // --- KIỂM TRA GIỜ (LOGIC MỚI) ---
-        const now = new Date();
-        const currentHour = now.getHours();
-
-        // !!! CHÚ Ý: Sửa số 18 bên dưới thành số 0 nếu muốn test ngay bây giờ !!!
-        if (currentHour < 0) {
-          msgBox.textContent = "⛔ Chưa tới giờ mở bán! 18h quay lại nhé.";
-          return;
-        }
-        // ---------------------------------
-
-        if (mySlots >= 2) {
-          msgBox.textContent = "⛔ Tham lam quá! Chỉ được mua 2 lô thôi!";
-          return;
-        }
-
-        // Gửi lệnh lên Firebase
-        const slotRef = ref(db, `slots/${slotId}`);
-        runTransaction(slotRef, (currentData) => {
-          // Nếu currentData là null nghĩa là ô trống -> Được ghi tên
-          if (currentData === null) {
-            return myName;
-          } else {
-            return; // Đã có người -> Hủy (Abort)
-          }
-        })
-          .then((result) => {
-            if (result.committed) {
-              msgBox.textContent = "✅ Chốt đơn thành công!";
-              msgBox.style.color = "#00ff88";
-            } else {
-              msgBox.textContent = "❌ Chậm tay rồi cưng ơi!";
-              msgBox.style.color = "#ff0055";
+            for (let i = 1; i <= 36; i++) {
+                let div = document.createElement('div');
+                div.className = 'slot';
+                div.id = `slot-${i}`;
+                div.innerHTML = `<span class="num">${i}</span><span class="owner"></span>`;
+                div.addEventListener('click', () => pickSlot(i));
+                grid.appendChild(div);
             }
-            // Xóa thông báo sau 2 giây
-            setTimeout(() => (msgBox.textContent = ""), 2000);
-          })
-          .catch((err) => {
-            console.error(err);
-            msgBox.textContent = "⚠️ Lỗi mạng rồi!";
-          });
-      }
+
+            const slotsRef = ref(db, 'slots');
+            onValue(slotsRef, (snapshot) => {
+                const data = snapshot.val() || {};
+                let currentMySlots = 0;
+
+                for (let i = 1; i <= 36; i++) {
+                    const slotDiv = document.getElementById(`slot-${i}`);
+                    const ownerName = document.querySelector(`#slot-${i} .owner`);
+                    
+                    if (data[i]) {
+                        slotDiv.classList.add('taken');
+                        ownerName.textContent = data[i];
+                        if (data[i] === myName) {
+                            slotDiv.classList.add('mine');
+                            currentMySlots++;
+                        } else {
+                            slotDiv.classList.remove('mine');
+                        }
+                    } else {
+                        slotDiv.classList.remove('taken', 'mine');
+                        ownerName.textContent = "";
+                    }
+                }
+                mySlots = currentMySlots;
+                document.getElementById('count').textContent = mySlots;
+            });
+        }
+
+        function pickSlot(slotId) {
+            // Check giờ lần cuối ở tầng Logic (Bảo mật kép)
+            const now = new Date();
+            if (now.getHours() < OPEN_HOUR) {
+                 alert("Gian lận hả cưng? Chưa đến giờ!");
+                 return;
+            }
+
+            const msgBox = document.getElementById('status-msg');
+            if (mySlots >= 2) {
+                msgBox.textContent = "⛔ Tham lam quá! Chỉ được mua 2 lô thôi!";
+                return;
+            }
+
+            const slotRef = ref(db, `slots/${slotId}`);
+            runTransaction(slotRef, (currentData) => {
+                if (currentData === null) {
+                    return myName; 
+                } else {
+                    return; 
+                }
+            }).then((result) => {
+                if (result.committed) {
+                    msgBox.textContent = "✅ Chốt đơn thành công!";
+                    msgBox.style.color = "#00ff88";
+                } else {
+                    msgBox.textContent = "❌ Chậm tay rồi cưng ơi!";
+                    msgBox.style.color = "#ff0055";
+                }
+                setTimeout(() => msgBox.textContent = "", 2000);
+            }).catch(err => {
+                console.error(err);
+                msgBox.textContent = "⚠️ Lỗi mạng rồi!";
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
-
-
